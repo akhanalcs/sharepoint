@@ -4,22 +4,22 @@ Learning SharePoint.
 ## Microsoft Forms
 2 ways to create forms:
 - [Microsoft Forms](https://forms.office.com/Pages/DesignPageV2.aspx)
-- [Microsoft Forms web part on a SharePoint site](https://support.microsoft.com/en-us/office/use-the-microsoft-forms-web-part-on-a-sharepoint-site-d4b4d3ce-7860-41e4-8a98-76380efe7256)(Shown below)
+- [Microsoft Forms web part on a SharePoint site](https://support.microsoft.com/en-us/office/use-the-microsoft-forms-web-part-on-a-sharepoint-site-d4b4d3ce-7860-41e4-8a98-76380efe7256) (Shown below)
 
 ### Create a form using Microsoft Forms web part on a SharePoint site
 1. Go to your SharePoint site.
 2. Click Edit.
 
-   <img width="1000" alt="image" src="screenshots/mf-site-edit.png">
+   <img width="1200" alt="image" src="screenshots/mf-site-edit.png">
 3. Click the plus icon to add a new web part.
 
-   <img width="550" alt="image" src="screenshots/mf-add-new-web-part.png">
+   <img width="600" alt="image" src="screenshots/mf-add-new-web-part.png">
 4. Search for Microsoft Forms and select it.
 
    <img width="500" alt="image" src="screenshots/mf-add-forms.png">
 5. Name the form and hit Create.
 
-   <img width="300" alt="image" src="screenshots/mf-name-form.png">
+   <img width="350" alt="image" src="screenshots/mf-name-form.png">
 6. Create the form.
   
    <img width="900" alt="image" src="screenshots/mf-form-created.png">
@@ -29,26 +29,28 @@ Learning SharePoint.
    <img width="250" alt="image" src="screenshots/mf-collect-responses-ok.png">
    
 ### Show results
-2 ways (In forms or Sharepoint).
-1. SharePoint site > Edit > Select form > Edit Properties > Visit Form web address > View responses
-2. SharePoint site > Edit > Select form > Edit Properties > Select "Show form results" > Ok > Republish
-   
-   <img width="150" alt="image" src="screenshots/mf-view-form-results.png">
+2 ways (In Forms or Sharepoint).
+1. In Forms: Site > Edit > Select form > Edit Properties > Visit Form web address > View responses.
+2. In Sharepoint: Site > Edit > Select form > Edit Properties > Select "Show form results" > Ok > Republish.
 
-   <img width="500" alt="image" src="screenshots/mf-form-results.png">
+   <p>
+     <img width="250" alt="image" src="screenshots/mf-view-form-results.png">
+   &nbsp;
+     <img width="600" alt="image" src="screenshots/mf-form-results.png">
+   </p>
 
 ### Delete the form: 
 1. SharePoint site > Edit > Select form > Delete web part > Republish
 2. Go to [Microsoft Forms](https://forms.office.com/Pages/DesignPageV2.aspx)
    - Select the form
 
-     <img width="500" alt="image" src="screenshots/mf-select-form.png">
-   - Click form name at the top center > Select group
+     <img width="550" alt="image" src="screenshots/mf-select-form.png">
+   - Click form name from the top center > Select group
 
-     <img width="250" alt="image" src="screenshots/mf-select-group.png">
+     <img width="300" alt="image" src="screenshots/mf-select-group.png">
    - Click the three dots on the form > Delete
    
-     <img width="500" alt="image" src="screenshots/mf-delete-group-forms.png">
+     <img width="600" alt="image" src="screenshots/mf-delete-group-forms.png">
   
 # SharePoint Framework (SPFx)
 ## Setup your Microsoft 365 tenant for development
