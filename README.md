@@ -27,6 +27,9 @@ Learning SharePoint.
    Make sure Collect responses is selected, then select OK to refresh so you're seeing the most updated content.
   
    <img width="250" alt="image" src="screenshots/mf-collect-responses-ok.png">
+8. (Optional) Add the form to the navigation menu of your SharePoint site if you'd like. [Reference](https://youtu.be/snoD8iXWcEc?si=UY-kEEhv0hTitt9G).
+
+   <img width="300" alt="image" src="screenshots/mf-add-forms-to-nav.png">
    
 ### Show results
 2 ways (In Forms or Sharepoint).
