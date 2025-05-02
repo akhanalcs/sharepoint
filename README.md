@@ -14,7 +14,7 @@ Make sure you're logged in using your Microsoft 365 account to use SharePoint.
 - [Microsoft Forms web part on a SharePoint site](https://support.microsoft.com/en-us/office/use-the-microsoft-forms-web-part-on-a-sharepoint-site-d4b4d3ce-7860-41e4-8a98-76380efe7256) (Shown below)
 
 #### Create a form using Microsoft Forms web part on a SharePoint site
-1. Go to your SharePoint site.
+1. Go to your SharePoint site. [Site creation instructions here.](#create-a-new-site-collection)
 2. Click Edit.
 
    <img width="1200" alt="image" src="screenshots/mf-site-edit.png">
@@ -93,11 +93,34 @@ https://learn.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tena
   <img width="1200" alt="image" src="screenshots/create-site.png">
 - Create team site.
   
-  <img width="500" alt="image" src="screenshots/create-team-site.png">
+  <img width="550" alt="image" src="screenshots/create-team-site.png">
 - Enter required details.
 
   <img width="1200" alt="image" src="screenshots/site-name.png">
 
   <img width="500" alt="image" src="screenshots/site-owners-members.png">
+- Browse to the site collection you just created: <Your site> > Site address > Click the link.
+  ```http request
+  https://lns4.sharepoint.com/sites/mytest/SitePages/CollabHome.aspx
+  ```
+
+### SharePoint Workbench
+SharePoint Workbench is a developer design surface that enables you to quickly preview and test web parts without deploying them in SharePoint. 
+
+You can access the Hosted SharePoint Workbench from any SharePoint site in your tenancy by browsing to the following URL:
+```http request
+https://your-sharepoint-site/_layouts/workbench.aspx
+# For my "mytest" site:
+https://lns4.sharepoint.com/sites/mytest/_layouts/15/workbench.aspx
+```
+<img width="1200" alt="image" src="screenshots/site-workbench.png">
 
   
+
+
+
+
+
+
+
+
