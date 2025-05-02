@@ -4,7 +4,7 @@ Learning SharePoint.
 ## Sharepoint Basics
 https://support.microsoft.com/en-us/office/get-started-with-sharepoint-909ec2f0-05c8-4e92-8ad3-3f8b0b6cf261
 
-<img width="450" alt="image" src="screenshots/sharepoint-link.png">
+<img width="400" alt="image" src="screenshots/sharepoint-link.png">
 
 Make sure you're logged in using your Microsoft 365 account.
 
