@@ -6,7 +6,7 @@ https://support.microsoft.com/en-us/office/get-started-with-sharepoint-909ec2f0-
 
 <img width="400" alt="image" src="screenshots/sharepoint-link.png">
 
-Make sure you're logged in using your Microsoft 365 account.
+Make sure you're logged in using your Microsoft 365 account to use SharePoint.
 
 ### Microsoft Forms
 2 ways to create forms:
@@ -78,14 +78,26 @@ https://learn.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tena
 - You need an app catalog to upload and deploy web parts.
 - Since my email is `<myname>@lns4.onmicrosoft.com` so my tenant prefix is `lns4`.
 - Go to `https://lns4-admin.sharepoint.com` to create an app catalog site.
-- Left sidebar > More features.
-  - Locate the section Apps and select Open.
+- Left sidebar > More features > Apps > Open.
 
-    <img width="1200" alt="image" src="screenshots/admin-center-more-features.png">
+  <img width="1200" alt="image" src="screenshots/admin-center-more-features.png">
 - SharePoint app catalog is used to manage and deploy SharePoint Framework solutions.
   
   <img width="1200" alt="image" src="screenshots/app-catalog-site.png">
 
 ### Create a new site collection
+- You also need a site collection and a site for your testing.
 - Go to `https://lns4-admin.sharepoint.com` to create a new site collection.
-- In the left sidebar, select Sites > Active sites.
+- In the left sidebar, select Sites > Active sites > Create.
+  
+  <img width="1200" alt="image" src="screenshots/create-site.png">
+- Create team site.
+  
+  <img width="500" alt="image" src="screenshots/create-team-site.png">
+- Enter required details.
+
+  <img width="1200" alt="image" src="screenshots/site-name.png">
+
+  <img width="500" alt="image" src="screenshots/site-owners-members.png">
+
+  
