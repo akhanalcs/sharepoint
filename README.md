@@ -108,15 +108,146 @@ https://learn.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tena
 SharePoint Workbench is a developer design surface that enables you to quickly preview and test web parts without deploying them in SharePoint. 
 
 You can access the Hosted SharePoint Workbench from any SharePoint site in your tenancy by browsing to the following URL:
-```http request
+```
 https://your-sharepoint-site/_layouts/workbench.aspx
 # For my "mytest" site:
 https://lns4.sharepoint.com/sites/mytest/_layouts/15/workbench.aspx
 ```
-<img width="1200" alt="image" src="screenshots/site-workbench.png">
+<img width="1000" alt="image" src="screenshots/site-workbench.png">
 
-  
+## Set up your SharePoint Framework development environment
+https://learn.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-development-environment
 
+### Install Node
+https://github.com/akhanalcs/nodejs-in-azure/blob/main/nodejs-learn/README.md#install-nodejs-using-nvm
+
+Currently, I already have the latest version of Node.js installed on my machine.
+```bash
+$ nvm current
+v23.10.0
+$ node --version
+v23.10.0
+```
+
+But SharePoint Framework `v1.21.*` is supported on `Node.js v22 LTS` (aka Jod), so I'll have to install that version.
+
+<img width="700" alt="image" src="screenshots/download-nodejs.png">
+
+```bash
+$ nvm install 22
+$ nvm current
+v22.15.0
+$ node -v
+v22.15.0
+```
+
+### Install a code editor
+I'm using JetBrains Rider.
+
+### Install development toolchain prerequisites
+The SharePoint Framework development and build toolchain leverages various popular open-source tools.
+While most dependencies are included in each project, you need to install a few dependencies globally on your workstation.
+
+#### Install Gulp
+Gulp is a JavaScript-based task runner used to automate repetitive tasks.
+SharePoint Framework build toolchain uses Gulp tasks to build projects, create JavaScript bundles, and the resulting packages used to deploy solutions.
+
+```bash
+npm install gulp-cli --global
+$ gulp -v
+CLI version: 3.0.0
+Local version: Unknown
+```
+
+#### Install Yeoman
+Yeoman is a scaffolding tool for modern web applications. 
+
+Yeoman helps you kick-start new projects, and prescribes best practices and tools to help you stay productive.  
+SharePoint client-side development tools include a Yeoman generator for creating new web parts.  
+The generator provides common build tools, common boilerplate code, and a common playground website to host web parts for testing.
+
+```bash
+$ npm install yo --global
+$ yo --version
+5.1.0
+```
+
+#### Install Yeoman SharePoint generator
+The Yeoman SharePoint web part generator helps you quickly create a SharePoint client-side solution project with the right toolchain and project structure.
+```bash
+# The @ symbol in npm package names indicates a scoped package. Scopes serve as namespaces for packages and are typically used by organizations to group related packages together.
+# The @microsoft scope indicates that the package is maintained by Microsoft. generator-sharepoint is the specific package within that scope.
+$ npm install @microsoft/generator-sharepoint --global
+
+$ yo @microsoft/sharepoint --help
+
+# Check version. More info: https://tahoeninja.blog/posts/how-to-tell-what-version-of-the-spfx-yeoman-generator-is-installed/
+$ npm list -g @microsoft/generator-sharepoint
+/Users/ashishkhanal/.nvm/versions/node/v22.15.0/lib
+└── @microsoft/generator-sharepoint@1.21.0
+
+$ npm ls -g
+/Users/ashishkhanal/.nvm/versions/node/v22.15.0/lib
+├── @microsoft/generator-sharepoint@1.21.0
+├── corepack@0.32.0
+├── gulp-cli@3.0.0
+├── npm@10.9.2
+└── yo@5.1.0
+```
+
+[More info](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/yeoman-generator-for-spfx-intro).
+
+## Build your first SharePoint client-side web part (Hello World part 1)
+https://learn.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/build-a-hello-world-web-part
+
+Client-side web parts are client-side components that run in the context of a SharePoint page. 
+Client-side web parts can be deployed to SharePoint environments that support the SharePoint Framework. 
+You can also use modern JavaScript web frameworks, tools, and libraries to build them.
+
+### Create a new web part project
+```bash
+$ mkdir hello-world
+$ cd hello-world/
+$ pwd
+/Users/ashishkhanal/RiderProjects/sharepoint/hello-world
+```
+
+Create a new project by running the Yeoman SharePoint Generator from within the new directory you created:
+```bash
+$ yo @microsoft/sharepoint
+
+     _-----_     ╭──────────────────────────╮
+    |       |    │ Welcome to the Microsoft │
+    |--(o)--|    │      365 SPFx Yeoman     │
+   `---------´   │     Generator@1.21.0     │
+    ( _´U`_ )    ╰──────────────────────────╯
+    /___A___\   /
+     |  ~  |     
+   __'.___.'__   
+ ´   `  |° ´ Y ` 
+
+See https://aka.ms/spfx-yeoman-info for more information on how to use this generator.
+Let's create a new Microsoft 365 solution.
+? What is your solution name? hello-world
+? Which type of client-side component to create? WebPart
+Add new Web part to solution hello-world.
+? What is your Web part name? HelloWorld
+? Which template would you like to use? No framework
+
+      _=+#####!       
+   ###########|       .------------------------------------.
+   ###/    (##|(@)    |          Congratulations!          |
+   ###  ######|   \   |  Solution hello-world is created.  |
+   ###/   /###|   (@) |   Run gulp serve to play with it!  |
+   #######  ##|   /   '------------------------------------'
+   ###     /##|(@)    
+   ###########|       
+      **=+####!  
+```
+
+### Preview the web part
+You can preview and test your client-side web part in the SharePoint **hosted workbench** without deploying your solution to SharePoint. 
+This is done by starting a local web server the hosted workbench can load files from using the gulp task **serve**.
 
 
 
