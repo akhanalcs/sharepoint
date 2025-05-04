@@ -103,6 +103,7 @@ https://learn.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tena
   ```http request
   https://lns4.sharepoint.com/sites/mytest/SitePages/CollabHome.aspx
   ```
+- Edit site details [using this guide](https://support.microsoft.com/en-us/office/change-a-site-s-title-description-logo-and-site-information-settings-8376034d-d0c7-446e-9178-6ab51c58df42).
 
 ### SharePoint Workbench
 SharePoint Workbench is a developer design surface that enables you to quickly preview and test web parts without deploying them in SharePoint. 
@@ -247,6 +248,39 @@ Add new Web part to solution hello-world.
 ```
 
 ### Check out the code
+#### README.md
+Update this file if you put this in a public repo.
+For testing/ learning, I won't bother updating this file.
+
+#### package-solution.json
+The `package-solution.json` contains the key metadata information about your client-side solution package and is referenced when you run the 
+`package-solution` gulp task that packages your solution into an `.sppkg` file. [Reference](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/toolchain/provision-sharepoint-assets#:~:text=The%20package%2Dsolution.json%20contains%20the%20key%20metadata%20information%20about%20your%20client%2Dside%20solution%20package%20and%20is%20referenced%20when%20you%20run%20the%20package%2Dsolution%20gulp%20task%20that%20packages%20your%20solution%20into%20an%20.sppkg%20file.).
+
+`package-solution.json` determines how your solution will be packaged and how it will appear in the SharePoint App Catalog. 
+It will also control how the app will get deployed, and what permission requests and isolation your app will need. [Reference](https://pnp.github.io/blog/post/spfx-21-professional-solutions-superb-solution-packages/).
+
+1 solution can contain multiple web parts.
+#### sass.json
+This sass.json file is a configuration file for the SASS compilation task.  
+If you visit the schema location, you can see the properties that are available to configure.
+```
+https://developer.microsoft.com/json-schemas/core-build/sass.schema.json
+```
+
+For eg:
+```json
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/core-build/sass.schema.json",
+  "useCSSModules": true,
+  "dropCssFiles": false
+}
+```
+
+My current `sass.json` only contains a reference to the schema.  
+It is a minimal configuration file that:
+- References the schema for editor validation and IntelliSense.
+- Uses default values for all SASS compilation settings.
+
 #### gulpfile.js
 The `gulpfile.js` file is the main entry point for Gulp tasks in your project.
 It defines the tasks that Gulp will run when you execute commands in the terminal.
@@ -343,14 +377,65 @@ build.rigTypo.getTasks(); // TypeScript error: Property 'rigTypo' does not exist
 
 The declaration file enables compile-time type checking without affecting the actual JavaScript execution.
 
+#### Other files
+Check out other files.
+
 ### Preview the web part
 You can preview and test your client-side web part in the SharePoint **hosted workbench** without deploying your solution to SharePoint. 
 This is done by starting a local web server the hosted workbench can load files from using the gulp task **serve**.
 
+#### [Trusting the self-signed developer certificate](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-development-environment#trusting-the-self-signed-developer-certificate)
+```bash
+$ gulp trust-dev-cert
+Build target: DEBUG
+[21:05:54] Using gulpfile ~/RiderProjects/sharepoint/hello-world/gulpfile.js
+[21:05:54] Starting 'trust-dev-cert'...
+[21:05:54] Starting gulp
+[21:05:54] Starting subtask 'trust-cert'...
+[21:05:54] [trust-cert] Attempting to trust a development certificate. This self-signed certificate only points to localhost and will be stored in your local user profile to be used by other instances of debug-certificate-manager. If you do not consent to trust this certificate, do not enter your root password in the prompt.
+Enter your password: 
+[21:06:36] Finished subtask 'trust-cert' after 42 s
+[21:06:36] Finished 'trust-dev-cert' after 42 s
+[21:06:37] ==================[ Finished ]==================
+[21:06:37] Project hello-world version:0.0.1
+[21:06:37] Build tools version:3.19.0
+[21:06:37] Node version:v22.15.0
+[21:06:37] Total duration:45 s
+```
+The client-side toolchain uses HTTPS endpoints by default.
 
+It's necessary to do this so that whenever we're referencing SharePoint online, there won't be a violation between http and https.
+And the browser is able to load the development time assets from localhost.
 
+#### [Set the SPFX_SERVE_TENANT_DOMAIN environment variable](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-development-environment#set-the-spfx_serve_tenant_domain-environment-variable-optional)
+Open your shell profile and set the `SPFX_SERVE_TENANT_DOMAIN` environment variable.
+```bash
+$ vim ~/.bash_profile
+```
+Add this:
+```
+# Set the SharePoint Framework Hosted Workbench Test Site
+export SPFX_SERVE_TENANT_DOMAIN=lns4.sharepoint.com
+```
 
+Source the profile:
+```bash
+$ . ~/.bash_profile
+```
 
+#### Start the local web server & launch the hosted workbench
+```bash
+$ gulp serve
+```
 
+- Search the web part name in the search box.
+
+  <img width="1000" alt="image" src="screenshots/hello-world-web-part.png">
+- Click the web part to add it to the page.
+
+  <img width="1000" alt="image" src="screenshots/hello-world-web-part-loaded.png">
+- Click the pencil icon to edit the web part. You can play with the properties.
+
+  <img width="1000" alt="image" src="screenshots/hello-world-web-part-edit-properties.png">
 
 
