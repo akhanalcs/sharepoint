@@ -430,10 +430,10 @@ $ gulp serve
 
 - Search the web part name in the search box.
 
-  <img width="1000" alt="image" src="screenshots/hello-world-web-part.png">
+  <img width="800" alt="image" src="screenshots/hello-world-web-part.png">
 - Click the web part to add it to the page.
 
-  <img width="1000" alt="image" src="screenshots/hello-world-web-part-loaded.png">
+  <img width="800" alt="image" src="screenshots/hello-world-web-part-loaded.png">
 - Click the pencil icon to edit the web part. You can play with the properties.
 
   <img width="1000" alt="image" src="screenshots/hello-world-web-part-edit-properties.png">
