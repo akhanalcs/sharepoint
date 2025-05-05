@@ -22,7 +22,12 @@
     "description": { "default": "HelloWorld description" },
     "officeFabricIconFontName": "Page",
     "properties": {
-      "description": "HelloWorld"
+      "description": "HelloWorld",
+      // Adding properties to the property pane. Step 4: Set the default values for the properties
+      "test": "Multi-line text field",
+      "test1": true,
+      "test2": "2",
+      "test3": true
     }
   }]
 }

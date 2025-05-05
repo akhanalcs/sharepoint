@@ -1,7 +1,11 @@
 import { Version } from '@microsoft/sp-core-library';
 import {
   type IPropertyPaneConfiguration,
-  PropertyPaneTextField
+  PropertyPaneTextField,
+  // Adding properties to the property pane. Step 1: Import the respective property pane fields (that are functions) from the framework.
+  PropertyPaneCheckbox,
+  PropertyPaneDropdown,
+  PropertyPaneToggle
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import type { IReadonlyTheme } from '@microsoft/sp-component-base';
@@ -10,15 +14,27 @@ import { escape } from '@microsoft/sp-lodash-subset';
 import styles from './HelloWorldWebPart.module.scss';
 import * as strings from 'HelloWorldWebPartStrings';
 
+// Adding properties to the property pane. Step 2: Update the web part properties to include the new properties.
+// This property definition interface is used to define the structure and types for the web part's properties.
+// Put simply: these are web part's properties.
+// For complete flow, take a look at "Configure the Web part property pane" section in the main README.md file of this repo.
 export interface IHelloWorldWebPartProps {
   description: string;
+  test: string; // Will store text from PropertyPaneTextField
+  test1: boolean; // Will store state from PropertyPaneCheckbox
+  test2: string; // Will store selection from PropertyPaneDropdown
+  test3: boolean; // Will store state from PropertyPaneToggle
 }
 
+// Main entry point for the web part.
+// Any client-side web part should extend the BaseClientSideWebPart class to be defined as a valid web part.
+// The web part class is defined to accept a property type IHelloWorldWebPartProps.
 export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorldWebPartProps> {
 
   private _isDarkTheme: boolean = false;
   private _environmentMessage: string = '';
 
+  // This model is flexible enough so that web parts can be built in any JavaScript framework and loaded into the DOM element.
   public render(): void {
     this.domElement.innerHTML = `
     <section class="${styles.helloWorld} ${!!this.context.sdks.microsoftTeams ? styles.teams : ''}">
@@ -27,6 +43,12 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
         <h2>Well done, ${escape(this.context.pageContext.user.displayName)}!</h2>
         <div>${this._environmentMessage}</div>
         <div>Web part property value: <strong>${escape(this.properties.description)}</strong></div>
+        <!-- this.properties comes from "protected get properties(): TProperties;" in BaseWebPart. Found that by Cmd+CLick on this.properties -->
+        <!-- this.properties.test comes from IHelloWorldWebPartProps.test -->
+        <p>${escape(this.properties.test)}</p>
+        <p>${this.properties.test1}</p>
+        <p>${escape(this.properties.test2)}</p>
+        <p>${this.properties.test3}</p>
       </div>
       <div>
         <h3>Welcome to SharePoint Framework!</h3>
@@ -104,6 +126,9 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
     return Version.parse('1.0');
   }
 
+  // Adding properties to the property pane. Step 3: Add the new property pane fields and map them to their respective typed objects.
+  // "Mapping" in this context means connecting the UI controls in the property pane (that appear when you click edit on the web part) 
+  // to the specific properties defined in your IHelloWorldWebPartProps interface.
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
     return {
       pages: [
@@ -117,6 +142,32 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
               groupFields: [
                 PropertyPaneTextField('description', {
                   label: strings.DescriptionFieldLabel
+                }),
+                // PropertyPaneTextField is a function that creates a text field control for the property pane.  
+                // First parameter (e.g., 'description', 'test') is the property name in IHelloWorldWebPartProps that this control is bound to.
+                // Second parameter is an object {/* configuration options */} containing the configuration options for this particular control.
+                  
+                // The first parameter ('test', 'test1', etc.) is what "maps" the UI control to the property in your interface.
+                PropertyPaneTextField('test', {
+                  label: 'Multi-line Text Field',
+                  multiline: true
+                }),
+                PropertyPaneCheckbox('test1', {
+                  text: 'Checkbox'
+                }),
+                PropertyPaneDropdown('test2', {
+                  label: 'Dropdown',
+                  options: [
+                    {key: '1', text: 'One'},
+                    {key: '2', text: 'Two'},
+                    {key: '3', text: 'Three'},
+                    {key: '4', text: 'Four'}
+                  ]
+                }),
+                PropertyPaneToggle('test3', {
+                  label: 'Toggle',
+                  onText: 'On',
+                  offText: 'Off'
                 })
               ]
             }

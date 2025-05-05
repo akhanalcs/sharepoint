@@ -145,6 +145,8 @@ v22.15.0
 ### Install a code editor
 I'm using JetBrains Rider.
 
+TypeScript is the primary language for building SharePoint client-side web parts.
+
 ### Install development toolchain prerequisites
 The SharePoint Framework development and build toolchain leverages various popular open-source tools.
 While most dependencies are included in each project, you need to install a few dependencies globally on your workstation.
@@ -380,6 +382,8 @@ The declaration file enables compile-time type checking without affecting the ac
 #### Other files
 Check out other files.
 
+https://learn.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/build-a-hello-world-web-part#web-part-project-structure
+
 ### Preview the web part
 You can preview and test your client-side web part in the SharePoint **hosted workbench** without deploying your solution to SharePoint. 
 This is done by starting a local web server the hosted workbench can load files from using the gulp task **serve**.
@@ -437,5 +441,21 @@ $ gulp serve
 - Click the pencil icon to edit the web part. You can play with the properties.
 
   <img width="1000" alt="image" src="screenshots/hello-world-web-part-edit-properties.png">
+
+### Configure the Web part property pane
+https://learn.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/build-a-hello-world-web-part#configure-the-web-part-property-pane
+
+The flow looks like this (AI generated):
+1. App starts → imports functions like PropertyPaneTextField, PropertyPaneCheckbox etc. from `@microsoft/sp-property-pane`
+2. `IHelloWorldWebPartProps` interface defines the property structure and types
+3. Default values are loaded from manifest.json's `properties` section
+4. Web part class instance is created with those default values
+5. `render()` method uses `this.properties.X` to display values
+6. User clicks "Edit" on the web part → property pane appears
+7. Property pane shows UI controls defined in `getPropertyPaneConfiguration()`
+8. When user changes values in these controls, the corresponding `this.properties.X` values update
+9. Web part re-renders to reflect changes
+
+For more info, look at the code and the comments I've put there.
 
 
