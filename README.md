@@ -458,4 +458,6 @@ The flow looks like this (AI generated):
 
 For more info, look at the code and the comments I've put there.
 
+<img width="1200" alt="image" src="screenshots/new-properties-to-pane.png">
+
 
