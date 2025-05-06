@@ -61,15 +61,13 @@ Make sure you're logged in using your Microsoft 365 account to use SharePoint.
    - Click the three dots on the form > Delete
    
      <img width="600" alt="image" src="screenshots/mf-delete-group-forms.png">
-    
-## Sharepoint Development
+
+# Sharepoint Development using SPFx
 https://learn.microsoft.com/en-us/sharepoint/dev/
 
-### Overview
+## Overview
 https://learn.microsoft.com/en-us/sharepoint/dev/spfx/sharepoint-framework-overview
 
-
-# SharePoint Framework (SPFx)
 ## Setup your Microsoft 365 tenant for development
 https://learn.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tenant
 
@@ -380,7 +378,7 @@ build.rigTypo.getTasks(); // TypeScript error: Property 'rigTypo' does not exist
 The declaration file enables compile-time type checking without affecting the actual JavaScript execution.
 
 #### Other files
-Check out other files.
+Check out other files. Play around with breakpoints and see the flow of the code.
 
 https://learn.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/build-a-hello-world-web-part#web-part-project-structure
 
@@ -458,6 +456,79 @@ The flow looks like this (AI generated):
 
 For more info, look at the code and the comments I've put there.
 
+Check out 4 more properties in the property pane.
+
 <img width="1200" alt="image" src="screenshots/new-properties-to-pane.png">
 
+## Connect your client-side web part to SharePoint (Hello World part 2)
+https://learn.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/connect-to-sharepoint
+
+Connect your web part to SharePoint to access functionality and data in SharePoint and provide a more integrated experience for end users.
+
+### Run the web part
+```bash
+# Builds and bundles the updated code automatically.
+gulp serve
+```
+
+Add the code changes shown in https://learn.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/connect-to-sharepoint#get-access-to-page-context.
+
+When you're on
+```
+https://lns4.sharepoint.com/sites/mytest/_layouts/15/workbench.aspx
+```
+Loading from: **MyTestSite**
+
+When you're on
+```
+https://lns4.sharepoint.com/_layouts/15/workbench.aspx
+```
+Loading from: **Communication site**
+
+### Working with SharePoint list data
+- Define list models: `ISPList` and `ISPLists` in `HelloWorldWebPart.ts`.
+- Use SharePoint REST APIs to retrieve the lists from the current site located at:
+  ```
+  https://lns4.sharepoint.com/_api/web/lists
+  ```
+- SharePoint Framework includes a helper class `spHttpClient` to execute REST API requests against SharePoint.
+- `spHttpClient` adds default headers, manages the digest needed for writes, and collects telemetry that helps the service to monitor the performance of an application.
+
+### Use `spHttpClient`
+- Write `_getListData()` in `HelloWorldWebPart.ts`.
+
+### Add new styles
+The SharePoint Framework uses Sass as the CSS pre-processor, and specifically uses the SCSS syntax, which is fully 
+compliant with normal CSS syntax. 
+
+Sass extends the CSS language and allows you to use features such as variables, nested rules, and inline imports to 
+organize and create efficient style sheets for your web parts. 
+
+The SharePoint Framework already comes with an SCSS compiler that converts your Sass files to normal CSS files, and 
+also provides a typed version to use during development.
+
+- Open `HelloWorldWebPart.module.scss`. This is the SCSS file where you define your styles.
+- By default, the styles are scoped to your web part. You can see that as the styles are defined under `.helloWorld`.
+- Add the styles shown in [the tutorial](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/connect-to-sharepoint#to-add-new-styles).
+- Save the file.
+- Gulp rebuilds the code in the console as soon as you save the file. This generates the corresponding typings in the `HelloWorldWebPart.module.scss.ts` file.
+
+  <img width="500" alt="image" src="screenshots/HelloWorldWebPart-module-scss-ts.png">
+
+  This file is dynamically generated when the project is built. It's hidden from VS Code's Explorer view using the `.vscode/settings.json` file.
+- After compiled to TypeScript, you can then import and reference these styles in your web part code.
+- You can see that in the `render()` method of the web part:
+  ```html
+  <div class="${styles.welcome}">
+  ```
+
+### Render the list information
+- Add the `_renderList(items: ISPList[]): void` method inside the `HelloWorldWebPart` class to render list information that will be received from REST API.
+- Add the `_renderListAsync():void` method inside the `HelloWorldWebPart` class to call the `_getListData()` method and render the list information by calling the `_renderList()` method.
+
+### Retrieve list data
+- Navigate to the `render()` method and add
+  - `<div id="spListContainer" />` to the `this.domElement.innerHTML` string to create a container for the list data.
+  - `this._renderListAsync()` to retrieve the list data.
+- Save the file and check the workbench.
 

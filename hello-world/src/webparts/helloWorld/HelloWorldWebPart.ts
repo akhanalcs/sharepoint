@@ -14,6 +14,8 @@ import { escape } from '@microsoft/sp-lodash-subset';
 import styles from './HelloWorldWebPart.module.scss';
 import * as strings from 'HelloWorldWebPartStrings';
 
+import {SPHttpClient, SPHttpClientResponse} from '@microsoft/sp-http';
+
 // Adding properties to the property pane. Step 2: Update the web part properties to include the new properties.
 // This property definition interface is used to define the structure and types for the web part's properties.
 // Put simply: these are web part's properties.
@@ -24,6 +26,16 @@ export interface IHelloWorldWebPartProps {
   test1: boolean; // Will store state from PropertyPaneCheckbox
   test2: string; // Will store selection from PropertyPaneDropdown
   test3: boolean; // Will store state from PropertyPaneToggle
+}
+
+export interface ISPList{
+  Title: string;
+  Id: string;
+}
+
+// ISPList interface holds the SharePoint list information that we're connecting to.
+export interface ISPLists{
+  value: ISPList[];
 }
 
 // Main entry point for the web part.
@@ -56,17 +68,24 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
         The SharePoint Framework (SPFx) is a extensibility model for Microsoft Viva, Microsoft Teams and SharePoint. It's the easiest way to extend Microsoft 365 with automatic Single Sign On, automatic hosting and industry standard tooling.
         </p>
         <h4>Learn more about SPFx development:</h4>
-          <ul class="${styles.links}">
-            <li><a href="https://aka.ms/spfx" target="_blank">SharePoint Framework Overview</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-graph" target="_blank">Use Microsoft Graph in your solution</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-teams" target="_blank">Build for Microsoft Teams using SharePoint Framework</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-viva" target="_blank">Build for Microsoft Viva Connections using SharePoint Framework</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-store" target="_blank">Publish SharePoint Framework applications to the marketplace</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-api" target="_blank">SharePoint Framework API reference</a></li>
-            <li><a href="https://aka.ms/m365pnp" target="_blank">Microsoft 365 Developer Community</a></li>
-          </ul>
+        <ul class="${styles.links}">
+          <li><a href="https://aka.ms/spfx" target="_blank">SharePoint Framework Overview</a></li>
+          <li><a href="https://aka.ms/spfx-yeoman-graph" target="_blank">Use Microsoft Graph in your solution</a></li>
+          <li><a href="https://aka.ms/spfx-yeoman-teams" target="_blank">Build for Microsoft Teams using SharePoint Framework</a></li>
+          <li><a href="https://aka.ms/spfx-yeoman-viva" target="_blank">Build for Microsoft Viva Connections using SharePoint Framework</a></li>
+          <li><a href="https://aka.ms/spfx-yeoman-store" target="_blank">Publish SharePoint Framework applications to the marketplace</a></li>
+          <li><a href="https://aka.ms/spfx-yeoman-api" target="_blank">SharePoint Framework API reference</a></li>
+          <li><a href="https://aka.ms/m365pnp" target="_blank">Microsoft 365 Developer Community</a></li>
+        </ul>
+        <div>Web part description: <strong>${this.properties.description}</strong></div>  
+        <div>Web part test: <strong>${escape(this.properties.test)}</strong></div>
+        <!-- this.context.pageContext.site means site collection, .web means site. -->
+        <div>Loading from: <strong>${escape(this.context.pageContext.web.title)}</strong></div>
       </div>
+      <div id="spListContainer" />
     </section>`;
+    
+    this._renderListAsync();
   }
 
   protected onInit(): Promise<void> {
@@ -175,5 +194,40 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
         }
       ]
     };
+  }
+  
+  // The method uses the spHttpClient helper class and issues an HTTP GET request.
+  // It uses the ISPLists interface and also applies a filter to not retrieve hidden lists.
+  private _getListData(): Promise<ISPLists>{
+    return this.context.spHttpClient.get(`${this.context.pageContext.web.absoluteUrl}/_api/web/lists?$filter=Hidden eq false`, SPHttpClient.configurations.v1)
+        .then((response: SPHttpClientResponse) =>{
+          return response.json();
+        })
+        .catch(()=>{});
+  }
+  
+  private _renderList(items: ISPList[]): void{
+    let html: string = '';
+    items.forEach((item: ISPList) => {
+      html += `
+      <ul class="${styles.list}">
+        <li class="${styles.listItem}">
+          <span class="ms-font-m">${item.Title}</span>    
+        </li>
+      </ul>`;
+    });
+
+    // You'll add "<div id="spListContainer" />" in the render() method later
+    if(this.domElement.querySelector('#spListContainer') !== null){
+      this.domElement.querySelector('#spListContainer')!.innerHTML = html;
+    }
+  }
+  
+  private _renderListAsync():void{
+    this._getListData()
+        .then((response) => {
+          this._renderList(response.value);
+        })
+        .catch(() => {});
   }
 }
