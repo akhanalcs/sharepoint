@@ -621,6 +621,10 @@ Updating the package by using npm installs the specified version of the package 
 - Check out `package.json` and verify that the tour instructions didn't tell you to install packages that were not required.
 
   For eg: It told me to install `"@microsoft/sp-adaptive-card-extension-base": "1.21.1"` which wasn't even used in my project, so I removed it.
+  ```bash
+  $ npm uninstall @microsoft/sp-adaptive-card-extension-base
+  ```
+  Reference: https://docs.npmjs.com/uninstalling-packages-and-dependencies
 - After the packages are installed, execute the following command to clean up any old build artifacts:
   ```bash
   $ gulp clean
