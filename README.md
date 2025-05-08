@@ -563,7 +563,117 @@ also provides a typed version to use during development.
 ## Deploy your client-side web part to a SharePoint page (Hello World part 3)
 https://learn.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/serve-your-web-part-in-a-sharepoint-page
 
+Follow the instructions in the tutorial.
 
+Some observations:
+- Deploy the client-side solution package. `https://lns4-admin.sharepoint.com` > Left sidebar > More features > Apps > Open.
+  
+  As you can see, it gets data from https://localhost:4321/dist/
+
+  <img width="1200" alt="image" src="screenshots/deploy-to-app-catalog.png">
+- Go to your site collection: https://lns4.sharepoint.com/ > Left sidebar > My sites > MyTestSite > Top nav bar on the right > Add an app
+
+  <img width="1200" alt="image" src="screenshots/nav-add-an-app.png">
+- Search for the app you just deployed > Click "Add"
+
+  <img width="900" alt="image" src="screenshots/sharepoint-my-apps.png">
+- Click "Back to MyTestSite" > Site contents.
+
+  The Site Contents page shows you the installation status of your client-side solution.
+  
+  <img width="1200" alt="image" src="screenshots/app-in-site-contents.png">
+
+  At this point, you have **deployed** and **installed** the client-side solution.
+
+- Remember that resources such as JavaScript and CSS are available from the local computer, so rendering of the web 
+  parts will fail unless your localhost is running. Check it by opening `{{your-webpart-guid}}.manifest.json` from the `dist` folder.
+
+  <img width="650" alt="image" src="screenshots/resources-loaded-from-local.png">
+- Before adding the web part to a SharePoint server-side page, run the local server.
+  ```bash
+  $ gulp serve --nobrowser
+  ```
+  `--nobrowser` will not automatically launch the SharePoint workbench as that's not needed in this case as we will host 
+  the web part in SharePoint page and not in the workbench.
+- MyTestSite > Top nav bar on the right > Add a page > Add a new web part > Search for the web part name > Click it.
+
+  <img width="1200" alt="image" src="screenshots/add-helloworld-web-part-to-page.png">
+
+  The web part assets are loaded from the local environment.
+- Check out web part properties using the "Edit Properties" option.
+
+  Edit the Description property, and enter "Client-side web parts are awesome!"
+- On the toolbar, select Save and close to save the page.
+
+  <img width="1200" alt="image" src="screenshots/page-save-and-close.png">
+- Check out the new page.
+
+  <img width="1200" alt="image" src="screenshots/my-test-page.png">
+
+## Host your client-side web part from Microsoft 365 CDN (Hello World part 4)
+https://learn.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/hosting-webpart-from-office-365-cdn
+
+Deploy and load the web part assets from an Office 365 CDN instead of localhost.
+
+Microsoft 365 Content Delivery Network (CDN) provides you an easy solution to host your assets directly from your own 
+Microsoft 365 tenant. 
+It can be used for hosting any static assets that are used in SharePoint Online.
+
+Follow the instructions in the tutorial.
+
+Some observations:
+- Open `package-solution.json` from the `config` folder. The `package-solution.json` file defines the package metadata.
+  - The default value for the `includeClientSideAssets` is `true`, which means that static assets are packaged automatically in the `*.sppkg` files, 
+    and you don't need to separately host your assets from an external system.
+
+    This means that assets are automatically hosted when solution is deployed to your tenant.
+  - If Microsoft 365 CDN **is enabled**, it's used automatically with default settings. If Microsoft 365 CDN **isn't enabled**, assets are served from 
+    the app catalog site collection. 
+  
+    This means that if you leave the `includeClientSideAssets` setting `true`, your solution assets are automatically hosted in the tenant.
+- Create a release build of your project. This will use a dynamic label as the host URL for your assets.
+
+  That URL is automatically updated based on your tenant CDN settings.
+  ```bash
+  $ gulp bundle --ship
+  ```
+- Package the solution. This will create a new package in the `sharepoint/solution` folder.
+  ```bash
+  $ gulp package-solution --ship
+  ```
+- Upload or drag and drop the newly created client-side solution package to the app catalog in your tenant.
+
+  `https://lns4-admin.sharepoint.com` > Left sidebar > More features > Apps > Open > Upload.
+
+  Because you already deployed the package, you're prompted as to whether to replace the existing package. Select Replace.
+
+  <img width="1200" alt="image" src="screenshots/deploy-to-app-catalog2.png">
+  
+  Notice that this gets data from SharePoint and not localhost.
+
+  This is because the content is either served from the Microsoft 365 CDN or from the app catalog, 
+  depending on the tenant settings.
+- Open "MyTestSite" where you previously installed the `helloworld-webpart-client-side-solution` or install the solution to a new site.
+  
+  Notice how the web part is rendered even though you're not running the local web server.
+
+  <img width="1200" alt="image" src="screenshots/my-test-page2.png">
+- Open your browser's development tools and open the Sources tab.
+
+  Check out how the `hello-world-web-part` file is loaded.
+
+  <img width="1200" alt="image" src="screenshots/web-part-in-cdn.png">
+
+  Now you've deployed your custom web part to SharePoint Online and it's being hosted automatically from the Microsoft 365 CDN.
+
+## Next steps
+- Look into how to deploy the solution to the app catalog automatically using GitHub Actions.
+- Check out next steps in the tutorial: https://learn.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/hosting-webpart-from-office-365-cdn#next-steps
+- Check out the reference solution in GitHub (Important):
+
+  https://github.com/pnp/spfx-reference-scenarios/tree/main/samples/contoso-retail-demo/
+
+  [Reference](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/sharepoint-framework-overview#:~:text=case%20with%20a-,reference%20solution,-available%20from%20GitHub).
 
 ## Upgrade SPFx project
 https://learn.microsoft.com/en-us/sharepoint/dev/spfx/toolchain/update-latest-packages
@@ -653,4 +763,5 @@ Updating the package by using npm installs the specified version of the package 
   ```bash
   gulp serve
   ```
+
 
