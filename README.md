@@ -556,11 +556,16 @@ also provides a typed version to use during development.
 - A GitHub issue was already opened for this problem. [Link](https://github.com/SharePoint/sp-dev-docs/issues/10207).
 - The solution is to upgrade to SharePoint Framework `1.21.1`. I'm currently on `1.21.0`.
 - Upgrade the project using the [instructions below](#upgrade-spfx-project).
-- After upgrading, the styles were applied correctly.
+- After upgrading, the styles applied correctly.
 
   <img width="650" alt="image" src="screenshots/styles-applied.png">
 
-#### Upgrade SPFx project
+## Deploy your client-side web part to a SharePoint page (Hello World part 3)
+https://learn.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/serve-your-web-part-in-a-sharepoint-page
+
+
+
+## Upgrade SPFx project
 https://learn.microsoft.com/en-us/sharepoint/dev/spfx/toolchain/update-latest-packages
 
 https://pnp.github.io/cli-microsoft365/cmd/spfx/project/project-upgrade
@@ -597,7 +602,7 @@ $ npm install mypackage@newversion
 
 Updating the package by using npm installs the specified version of the package in your project and updates the version number in the package.json file dependencies and the lock file used in your project.
 
-**Upgrade Steps:**
+### Upgrade Steps
 - Upgrade Yeoman generator [following the instructions above](#upgrade-yeoman-generator-at-a-later-time).
 - Install the Microsoft 365 CLI from https://pnp.github.io/cli-microsoft365/
   ```bash
@@ -644,7 +649,7 @@ Updating the package by using npm installs the specified version of the package 
   ```bash
   $ gulp build
   ```
-- The project is updated at this point, so run it:
+- The project is upgraded at this point, so run it:
   ```bash
   gulp serve
   ```
