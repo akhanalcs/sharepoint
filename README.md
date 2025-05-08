@@ -555,8 +555,12 @@ also provides a typed version to use during development.
   <img width="675" alt="image" src="screenshots/inspect-list-elements.png">
 - A GitHub issue was already opened for this problem. [Link](https://github.com/SharePoint/sp-dev-docs/issues/10207).
 - The solution is to upgrade to SharePoint Framework `1.21.1`. I'm currently on `1.21.0`.
+- Upgrade the project using the [instructions below](#upgrade-spfx-project).
+- After upgrading, the styles were applied correctly.
 
-#### Upgrade the project
+  <img width="650" alt="image" src="screenshots/styles-applied.png">
+
+#### Upgrade SPFx project
 https://learn.microsoft.com/en-us/sharepoint/dev/spfx/toolchain/update-latest-packages
 
 https://pnp.github.io/cli-microsoft365/cmd/spfx/project/project-upgrade
